@@ -6,11 +6,10 @@ type Category = "All" | "New" | "Women" | "Men" | "Accessories";
 const categories: Category[] = ["All", "New", "Women", "Men", "Accessories"];
 
 export const Route = createFileRoute("/shop")({
-  validateSearch: (search: Record<string, unknown>): { category: Category } => ({
-    category: (categories.includes(search["category"] as Category)
-      ? search["category"]
-      : "All") as Category,
-  }),
+  validateSearch: (search: Record<string, unknown>): { category?: Category } =>
+    categories.includes(search["category"] as Category)
+      ? { category: search["category"] as Category }
+      : {},
   head: () => ({
     meta: [
       { title: "Shop All — Atelier" },
